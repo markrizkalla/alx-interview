@@ -32,11 +32,14 @@ dict_sc = {"200": 0,
            "405": 0,
            "500": 0}
 
+
 def handle_ctrl_c(sig, frame):
     counter = 0
     print_msg(dict_sc, total_file_size)
 
+
 signal.signal(signal.SIGINT, handle_ctrl_c)
+
 
 try:
     for line in sys.stdin:
@@ -58,4 +61,4 @@ try:
                 counter = 0
 
 finally:
-    print_msg(dict_sc, total_file_size)   
+    print_msg(dict_sc, total_file_size)
