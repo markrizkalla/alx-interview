@@ -1,6 +1,9 @@
 #!/usr/bin/python3
+""" UTF-8 Validation """
+
 
 def validUTF8(data):
+    """Validate data is UTF-8 encoding"""
 
     for j in range(len(data)):
         byte = data[j] & 0xFF
