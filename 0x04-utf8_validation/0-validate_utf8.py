@@ -6,7 +6,9 @@ def validUTF8(data):
     """Validate data is UTF-8 encoding"""
 
     for j in range(len(data)):
-        byte = data[j]
+        if data[j] > 255:
+            return False
+        byte = data[j] & 0xFF
         n = 0
         for i in range(7, 0, -1):
             if (byte >> i) == 1:
