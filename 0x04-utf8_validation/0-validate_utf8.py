@@ -3,27 +3,24 @@
 
 
 def validUTF8(data):
-    """Validate data is UTF-8 encoding"""
+    """Validate data is UTF-8 encoded"""
+    num_bytes = 0
 
-    for j in range(len(data)):
-        byte = data[j] & 0xFF
-        n = 0
-        for i in range(7, 0, -1):
-            if ((byte >> i) & 1) == 1:
-                n += 1
-            else:
-                break
-
-        if n == 0:
-            continue
-        if n == 1 or n > 4 or j + n > len(data):
-            return False
-
-        for k in range(n+j):
-            tbyte = data[k] & 0xFF
-            if (tbyte >> 6) != 2:
+    for byte in data:
+        if num_bytes == 0:
+            # Determine the number of bytes in the UTF-8 character
+            if (byte >> 5) == 0b110:
+                num_bytes = 1
+            elif (byte >> 4) == 0b1110:
+                num_bytes = 2
+            elif (byte >> 3) == 0b11110:
+                num_bytes = 3
+            elif (byte >> 7):
                 return False
+        else:
+            # Check that the byte starts with '10'
+            if (byte >> 6) != 0b10:
+                return False
+            num_bytes -= 1
 
-        j = j + (n-1)
-
-    return True
+    return num_bytes == 0
