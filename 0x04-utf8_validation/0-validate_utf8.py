@@ -9,14 +9,13 @@ def validUTF8(data):
         byte = data[j] & 0xFF
         n = 0
         for i in range(7, 0, -1):
-            if (byte >> i) == 1:
+            if (byte >> i) & 1 == 1:
                 n += 1
             else:
                 break
 
         if n == 0:
             continue
-
         if n == 1 or n > 4 or j + n > len(data):
             return False
 
